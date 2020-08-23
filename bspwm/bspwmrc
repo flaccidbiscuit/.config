@@ -1,0 +1,38 @@
+#! /bin/sh
+
+~/.local/bin/wal -R
+sxhkd &
+$HOME/.config/polybar/launch.sh
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config border_width        4
+bspc config window_gap          8
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# pywal colorscheme sync
+. "${HOME}/.cache/wal/colors.sh"
+bspc config normal_border_color "$color1"
+bspc config active_border_color "$color2"
+bspc config focused_border_color "$color15"
+bspc config presel_feedback_color "$color1"
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+
+# custom rules for packages
+bspc rule -a Zathura state=tiled
+
+# load things
+xrdb ~/.Xresources
+picom --experimental-backends
+nm-applet
+
+# disable touchpad
+xinput set-prop "SynPS/2 Synaptics Touchpad" "Device Enabled" 0
